@@ -18,7 +18,7 @@ services:
     ports:
       - "5432:5432"
     # Le "docker engine" tente systématiquement de redémarrer le conteneur
-    # de plus, le conteneur est démarrer automatiquement au lancement du "doker engine"
+    # de plus, le conteneur est démarrer automatiquement au lancement du "docker engine"
     restart: always
     # Création du volume permettant d'ajouter le script de création de la base de données au conteneur Docker
     volumes:
