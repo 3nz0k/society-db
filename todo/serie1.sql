@@ -5,7 +5,7 @@
 select * from department;
 
 --2
-select last_name, hiring_date, superior_id, department_id from employee;
+select last_name, hiring_date, superior_id, department_id from employee; --manque le salaire
 
 --3
 select title from employee;
@@ -33,15 +33,16 @@ select last_name, title, salary from employee where title = 'représentant' or t
 
 -- 11
 select last_name, title, department_id, salary from employee where department_id = '34' AND title = 'représentant' or title = 'secrétaire';
-
+-- ATTENTION Le AND est prioritaire par rapport au OR, du coup ta réquête ne fonctionne pas. Ajouter des parenthèses
 -- 12
 select last_name, title, department_id, salary from employee where department_id = '34' AND title = 'représentant' or title = 'secrétaire' and department_id = '34';
-
+-- Le département 34 n'est pas demandé pour les Représentants
 -- 13
 select last_name, salary from employee where salary >= 20000 and salary <= 30000;
 
 -- 14
 select last_name from employee where last_name like 'h%';
+-- ATTENTION aux SGBD sensible à la casse !
 
 -- 15
 select last_name from employee where last_name like '%n';
@@ -81,10 +82,11 @@ select last_name, salary, commission_rate,  commission_rate*salary as commission
 
 -- 27
 select CONCAT("last_name", first_name) as name from employee;
+-- Tu as mis "last_name" entre guillemets, donc SQL l’interprète comme une chaîne de caractères, pas comme une colonne.
 
 -- 28
 select SUBSTRING(last_name, 0, 6) from employee;
-
+-- Ta requête renvoie 6 lettres, ce n'est pas exactement ce qui est demandé.
 -- 29
 select last_name, position('r' in last_name) from employee;
 
