@@ -6,12 +6,14 @@ SELECT e.department_id, d.name, e.last_name FROM employee e JOIN department d ON
 
 -- 3
 SELECT e.last_name FROM employee e JOIN department d ON e.department_id = d.id where d."name" = 'distribution';
+-- Attention à la casse : préférer : WHERE LOWER(d.name) = 'distribution' ou WHERE d.name ILIKE 'distribution'  pour PostgreSQL
 
 -- 4
 SELECT e1.last_name, e1.salary, e2.last_name, e2.salary FROM employee e1 JOIN employee e2 ON e1.superior_id::int = e2.id where e1.salary > e2.salary;
 
 -- 5
 SELECT * FROM employee WHERE department_id IN (SELECT id FROM department WHERE name LIKE 'finance');
+-- idem attention à la casse
 
 -- 6
 SELECT e.last_name, e.title FROM employee e where title in (select e2.title from employee e2 where e2.last_name = 'amartakaldire');
@@ -30,15 +32,17 @@ SELECT e.last_name, e.title FROM employee e where e.department_id ='31' and titl
 
 -- 11
 SELECT last_name, title, salary FROM employee where title in (select title from employee where last_name = 'fairent') and salary in (select salary from employee where last_name = 'fairent');
-
+-- Attention, c'est 'fairant'
 -- 12
 SELECT e.department_id, d.name, e.last_name FROM employee e right join department d on e.department_id = d.id order by e.department_id;
+-- Mieux vaut trier par d.id pour éviter d'avoir les départements NULL en premier
 
 -- 13
 SELECT AVG(salary) FROM employee WHERE title LIKE 'secrétaire';
 
 -- 14
 select COUNT(title) FROM employee group by department_id;
+-- La question demande le nombre d'employés par titre, pas par département
 
 -- 15
 select AVG(e.salary), SUM(e.salary) FROM employee e join department d on e.department_id = d.id group by d.region_id;
@@ -57,10 +61,11 @@ select count(distinct title) from employee;
 
 -- 20
 select title, count(title) from employee group by title having count(*) >= 1;
+-- Le HAVING count(*) >= 1 est inutile (tous les groupes ont au moins 1 ligne)
 
 -- 21
 select d.name, count(e.title) from employee e join department d on e.department_id = d.id group by d.name having count(e.title) >= 1;
-
+-- Le HAVING count(*) >= 1 est inutile (tous les groupes ont au moins 1 ligne)
 -- 22
 select title, avg(salary) from employee group by title having avg(salary) > (select avg(salary) from employee where title = 'représentant');
 
