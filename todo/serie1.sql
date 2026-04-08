@@ -5,7 +5,7 @@
 select * from department;
 
 --2
-select last_name, hiring_date, superior_id, department_id from employee;
+select last_name, hiring_date, superior_id, department_id, salary from employee;
 
 --3
 select title from employee;
@@ -32,16 +32,16 @@ select last_name, salary, department_id from employee where title = 'représenta
 select last_name, title, salary from employee where title = 'représentant' or title = 'président';
 
 -- 11
-select last_name, title, department_id, salary from employee where department_id = '34' AND title = 'représentant' or title = 'secrétaire';
+select last_name, title, department_id, salary from employee where department_id = '34' and (title = 'représentant' or title = 'secrétaire');
 
 -- 12
-select last_name, title, department_id, salary from employee where department_id = '34' AND title = 'représentant' or title = 'secrétaire' and department_id = '34';
+select last_name, title, department_id, salary from employee where title = 'représentant' or (title = 'secrétaire' and department_id = '34');
 
 -- 13
 select last_name, salary from employee where salary >= 20000 and salary <= 30000;
 
 -- 14
-select last_name from employee where last_name like 'h%';
+select last_name from employee where LOWER(last_name) like 'h%';
 
 -- 15
 select last_name from employee where last_name like '%n';
@@ -80,10 +80,10 @@ select last_name, salary, commission_rate,  commission_rate*salary as commission
 select last_name, salary, commission_rate,  commission_rate*salary as commission from employee where commission_rate is not null order by commission_rate;
 
 -- 27
-select CONCAT("last_name", first_name) as name from employee;
+select CONCAT(last_name,' ', first_name) as name from employee;
 
 -- 28
-select SUBSTRING(last_name, 0, 6) from employee;
+select SUBSTRING(last_name, 1, 5) from employee;
 
 -- 29
 select last_name, position('r' in last_name) from employee;
